@@ -1,3 +1,4 @@
+---
 version: '3.8'
 
 services:
@@ -5,6 +6,7 @@ services:
     build:
       context: .
     volumes:
+      - ./config:/etc/rss-ntfy
       - histfiles:/root/:rw
 
 volumes:

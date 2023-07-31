@@ -1,0 +1,52 @@
+---
+
+feeds:
+  github_user:
+    - binwiederhier
+  github_release:
+    - binwiederhier/ntfy
+  github_commit:
+    - binwiederhier/ntfy
+    - Kariton/rss-ntfy
+  pypi:
+    - ntfy
+  discuss_ntfy:
+    - c/ntfy
+    - u/binwiederhier
+  reddit_subreddit:
+    - SysadminHumor+Programmerhumor
+    - SelfHosted
+    - HomeLab
+  reddit_user:
+    - u/binwiederhier
+  youtube:
+    - name: UCXuqSBlHAE6Xw-yeJA0Tunw
+      feed_display_name: LTT
+
+services:
+  github_user:
+    ntfy_topic: topic1
+
+  github_release:
+    ntfy_topic: topic2
+ 
+  github_commit:
+    ntfy_topic: topic3
+
+  pypi:
+    ntfy_topic: topic4
+
+  discuss_ntfy:
+    ntfy_topic: topic5
+
+  reddit_subreddit:
+    ntfy_topic: topic6
+
+  reddit_user:
+    ntfy_topic: topic7
+
+  youtube:
+    ntfy_topic: topic8
+
+config:
+  run_on_startup: true

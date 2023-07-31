@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "config": {
+      "type": "object",
+      "properties": {
+        "cache_location": { "type": "string" },
+        "run_on_startup": { "type": "boolean" },
+        "log_level": {
+          "type": "string",
+          "enum": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL", "debug", "info", "warning", "error", "critical"]
+        },
+        "schedule": { "type": "string", "format": "cron" },
+        "service_wait": { "type": "integer" },
+        "feed_wait": { "type": "integer" },
+        "max_attempts": { "type": "integer" },
+        "retry_wait": { "type": "integer" }
+      },
+      "required": [
+        "cache_location",
+        "run_on_startup",
+        "log_level",
+        "schedule",
+        "service_wait",
+        "feed_wait",
+        "max_attempts",
+        "retry_wait"
+      ]
+    },
+    "global": {
+      "type": "object",
+      "properties": {
+        "ntfy_server": { "type": "string", "format": "uri" },
+        "ntfy_topic": { "type": "string" },
+        "ntfy_auth": {
+          "type": "object",
+          "properties": {
+            "username": { "type": "string" },
+            "password": { "type": "string" },
+            "token": { "type": "string" }
+          }
+        },
+        "ntfy_subtitle_prefix": { "type": "string" },
+        "ntfy_subtitle_seperator": { "type": "string" },
+        "ntfy_icon": { "type": "string", "format": "uri" },
+        "ntfy_tags": { "type": "array", "items": { "type": "string" } },
+        "ntfy_priority": {
+          "oneOf": [
+            { "type": "integer",
+              "enum": ["1", "2", "3", "4", "5"]
+            },
+            {
+              "type": "string",
+              "enum": ["min", "low", "default", "high", "max", "urgent"]
+            }
+          ]
+        },
+        "ntfy_cache": { "type": "boolean" },
+        "ntfy_email": { "type": "string", "format": "email" },
+        "ntfy_call": { "type": "string", "format": "phone"},
+        "ntfy_delay": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "integer" }
+          ]
+        },
+        "feed_display_name": { "type": "string" }
+      }
+    },
+    "services": {
+      "type": "object",
+      "minItems": 1,
+      "patternProperties": {
+        "^.+$": {
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "service_feed": { "type": "string" },
+                "service_url": { "type": "string" }
+              },
+              "required": ["service_feed", "service_url"]
+            },
+            {
+              "$ref": "#/properties/global"
+            }
+          ]
+        }
+      }
+    },
+    "feeds": {
+      "type": "object",
+      "minItems": 1,
+      "patternProperties": {
+        "^.+$": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string" }
+                    },
+                    "required": ["name"]
+                  },
+                  {
+                    "$ref": "#/properties/global"
+                  }
+                ]
+              },
+              "minItems": 1
+            }
+          ]
+        }
+      }
+    }
+  },
+  "formats": {
+    "cron": "^(?:[\\d*,\\/\\-]+\\s){4}[\\d*,\\/\\-]+$",
+    "phone": "^[+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$"
+  },
+  "required": ["config", "global", "services", "feeds"]
+}

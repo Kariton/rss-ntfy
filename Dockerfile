@@ -1,11 +1,14 @@
-FROM python:3.10.6
+FROM python:3.11-alpine
 
-ADD rss-ntfy.py .
+RUN mkdir -p /rss-ntfy /etc/rss-ntfy
+WORKDIR /rss-ntfy
 
-COPY requirements.txt ./
+ADD ./rss-ntfy/* /rss-ntfy/
+COPY requirements.txt /rss-ntfy/
 
+RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+ENV PYTHONUNBUFFERED=1
 
-CMD [ "python", "./rss-ntfy.py" ]
+CMD ["python", "-u", "/rss-ntfy/rss-ntfy.py"]

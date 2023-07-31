@@ -1,0 +1,138 @@
+---
+
+feeds:
+  github: []
+  github_user: []
+  github_release: []
+  github_commit: []
+  pypi: []
+  discuss_ntfy: []
+  reddit: []
+  reddit_subreddit: []
+  reddit_user: []
+  youtube: []
+  youtube_playlist: []
+  twitch: []
+  tiktok: []
+
+global:
+  ntfy_server: https://ntfy.sh
+#  ntfy_topic: null
+#  ntfy_auth:
+#    username: null
+#    password: null
+#    token: null
+#  ntfy_subtitle_prefix: null
+#  ntfy_subtitle_seperator: null
+#  ntfy_icon: null
+#  ntfy_tags: null
+#  ntfy_priority: null
+#  ntfy_cache: null
+#  ntfy_email: null
+#  ntfy_call: null
+#  ntfy_delay: null
+
+services:
+  github:
+    service_feed: https://github.com/{{ name }}.atom
+    service_url: https://github.com/{{ name }}
+    ntfy_icon: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+    ntfy_tags: ['robot']
+
+  github_user:
+    service_feed: https://github.com/{{ name }}.atom
+    service_url: https://github.com/{{ name }}
+    ntfy_icon: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+    ntfy_tags: ['robot']
+
+  github_release:
+    service_feed: https://github.com/{{ name }}/releases.atom
+    service_url: https://github.com/{{ name }}
+    ntfy_icon: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+    ntfy_subtitle_prefix: 🤖 GitHub Release
+    ntfy_subtitle_seperator: by
+    ntfy_tags: ['robot']
+ 
+  github_commit:
+    service_feed: https://github.com/{{ name }}/commits.atom
+    service_url: https://github.com/{{ name }}
+    ntfy_icon: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+    ntfy_subtitle_prefix: GitHub Commit on
+    ntfy_subtitle_seperator: by
+    ntfy_tags: ['robot']
+
+  pypi:
+    service_feed: https://pypi.org/rss/project/{{ name }}/releases.xml
+    service_url: https://pypi.org/project/{{ name }}
+    ntfy_icon: https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png
+    ntfy_subtitle_prefix: 🐍 PyPI Release
+    ntfy_subtitle_seperator: by
+    ntfy_tags: ['snake']
+
+  discuss_ntfy:
+    service_feed: https://discuss.ntfy.sh/feeds/{{ name }}.xml
+    service_url: https://discuss.ntfy.sh/{{ name }}
+    ntfy_icon: https://raw.githubusercontent.com/LemmyNet/lemmy-ui/main/src/assets/icons/icon-144x144.png
+    ntfy_subtitle_seperator: by
+    ntfy_tags: ['mouse']
+
+  reddit:
+    service_feed: https://www.reddit.com/{{ name }}/.rss
+    service_url: https://www.reddit.com/{{ name }}
+    ntfy_icon: https://www.redditstatic.com/desktop2x/img/favicon/android-icon-144x144.png
+    ntfy_subtitle_seperator: by
+    ntfy_tags: ['tophat']
+
+  reddit_subreddit:
+    service_feed: https://www.reddit.com/r/{{ name }}/.rss
+    service_url: https://www.reddit.com/r/{{ name }}
+    ntfy_icon: https://www.redditstatic.com/desktop2x/img/favicon/android-icon-144x144.png
+    ntfy_subtitle_prefix: Posted on
+    ntfy_subtitle_seperator: by
+    ntfy_tags: ['tophat']
+
+  reddit_user:
+    service_feed: https://www.reddit.com/u/{{ name }}/.rss
+    service_url: https://www.reddit.com/u/{{ name }}
+    ntfy_icon: https://www.redditstatic.com/desktop2x/img/favicon/android-icon-144x144.png
+    ntfy_tags: ['tophat']
+
+  youtube:
+    service_feed: https://www.youtube.com/feeds/videos.xml?channel_id={{ name }}
+    service_url: https://www.youtube.com/channel/{{ name }}
+    ntfy_icon: https://www.gstatic.com/youtube/img/branding/favicon/favicon_144x144.png
+    ntfy_subtitle_prefix: YouTube Video
+    ntfy_subtitle_seperator: by
+    ntfy_tags: ['video_camera']
+
+  youtube_playlist:
+    service_feed: https://www.youtube.com/feeds/videos.xml?playlist_id={{ name }}
+    service_url: https://www.youtube.com/playlist?list={{ name }}
+    ntfy_icon: https://www.gstatic.com/youtube/img/branding/favicon/favicon_144x144.png
+    ntfy_subtitle_prefix: YouTube Playlist
+    ntfy_subtitle_seperator: by
+    ntfy_tags: ['video_camera']
+
+  twitch:
+    service_feed: https://twitchrss.appspot.com/vod/{{ name }}
+    service_url: https://www.twitch.tv/{{ name }}
+    ntfy_icon: https://static.twitchcdn.net/assets/favicon-32-e29e246c157142c94346.png
+    ntfy_subtitle_prefix: Twitch Stream
+    ntfy_subtitle_seperator: by
+    ntfy_tags: ['tv']
+
+  tiktok:
+    service_feed: https://proxitok.pabloferreiro.es/@{{ name }}/rss
+    service_url: https://proxitok.pabloferreiro.es/@{{ name }}
+    ntfy_subtitle_prefix: 🎶 TikTok by
+    ntfy_tags: ['notes']
+
+config:
+  cache_location: ~/.cache
+  run_on_startup: false
+  log_level: info
+  schedule: '*/30 * * * *'
+  service_wait: 60
+  feed_wait: 5
+  max_attempts: 3
+  retry_wait: 30

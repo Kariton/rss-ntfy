@@ -1,4 +1,7 @@
-bs4
+feedparser
+markdownify
+jsonschema
+watchdog
+croniter
 requests
-lxml
 pyyaml
