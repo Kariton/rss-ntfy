@@ -134,5 +134,6 @@ config:
   schedule: '*/30 * * * *'
   service_wait: 60
   feed_wait: 5
+  max_message_size: 4096
   max_attempts: 3
   retry_wait: 30

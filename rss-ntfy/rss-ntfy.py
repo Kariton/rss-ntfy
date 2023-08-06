@@ -284,6 +284,7 @@ def ntfyr(data_json):
     config = CONFIG['config']
     global_config = CONFIG['global']
 
+    max_message_size = int(config.get('max_message_size'))
     max_attempts = int(config.get('max_attempts'))
     retry_wait = int(config.get('retry_wait'))
 
@@ -295,7 +296,7 @@ def ntfyr(data_json):
 
     headers = ntfy_headers(data_json['ntfy_auth'], data_json['ntfy_cache'], data_json['ntfy_icon'], data_json['ntfy_tags'], data_json['ntfy_priority'], data_json['ntfy_email'], data_json['ntfy_call'], data_json['ntfy_delay'], data_json['ntfy_thumbnail'])
 
-    parts = split_message_into_parts(data_json, max_size=4096)
+    parts = split_message_into_parts(data_json, max_message_size)
     total_parts = len(parts)
 
     if data_json['item_link'] is not None:
