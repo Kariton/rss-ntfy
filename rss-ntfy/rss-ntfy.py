@@ -354,7 +354,7 @@ def ntfyr(data_json):
                     raise StopIteration
             attempts += 1
         else:
-            logger.error("Failed to send part {part_num} of {total_parts} after {max_attempts} attempts.")
+            logger.error(f"Failed to send part {part_num} of {total_parts} after {max_attempts} attempts.")
             logger.error(f'"post_data": {json.dumps(request_json)}')
             logger.error(f'"post_header": {json.dumps(headers)}')
             try:
