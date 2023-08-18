@@ -407,7 +407,7 @@ def build_message(item):
 
 
 def build_subtitle(item, feed, url, feed_display_name=None, ntfy_subtitle_prefix=None, ntfy_subtitle_seperator=None):
-    ntfy_subtitle_text = f"({feed_display_name or feed})[{url}]"
+    ntfy_subtitle_text = f"[{feed_display_name or feed}]({url})"
     ntfy_subtitle_postfix = str()
     all_authors = list()
 
