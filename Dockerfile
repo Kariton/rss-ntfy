@@ -1,14 +1,27 @@
-FROM python:3.11-alpine
+### COMPILE ###
+FROM python:3.11-alpine AS compile-image
 
-RUN mkdir -p /rss-ntfy /etc/rss-ntfy
-WORKDIR /rss-ntfy
+RUN python -m venv /opt/venv
+# Make sure we use the virtualenv:
+ENV PATH="/opt/venv/bin:$PATH"
 
-ADD ./rss-ntfy/* /rss-ntfy/
-COPY requirements.txt /rss-ntfy/
+COPY requirements.txt .
+RUN pip install --upgrade --requirement requirements.txt
 
-RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
 
+### BUILD ###
+
+FROM python:3.11-alpine AS build-image
+RUN adduser -D rss-ntfy
+USER rss-ntfy
+WORKDIR /home/rss-ntfy
+
+ADD --chown=rss-ntfy ./rss-ntfy/ ./rss-ntfy/
+COPY --from=compile-image --chown=rss-ntfy /opt/venv /opt/venv
+
+RUN chmod +x ./rss-ntfy/bot.py
+
+# Make sure we use the virtualenv:
+ENV PATH="/opt/venv/bin:$PATH"
 ENV PYTHONUNBUFFERED=1
-
-CMD ["python", "-u", "/rss-ntfy/rss-ntfy.py"]
+CMD ./rss-ntfy/bot.py

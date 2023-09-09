@@ -7,8 +7,7 @@ services:
       context: .
     volumes:
       - ./config:/etc/rss-ntfy
-      - histfiles:/root/:rw
+      - histfiles:/data:rw
 
 volumes:
   histfiles:
-

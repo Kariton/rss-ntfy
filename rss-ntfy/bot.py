@@ -81,7 +81,7 @@ def update_config(init=False):
     global CONFIG, DEFAULT_CONFIG
 
     config_path = "/etc/rss-ntfy/config.yml"
-    schema_path = "schema.json"
+    schema_path = "./rss-ntfy/schema.json"
     try:
         custom_config = load_config(config_path)
 
@@ -134,7 +134,7 @@ def update_config(init=False):
 def init_config():
     global CONFIG, DEFAULT_CONFIG
 
-    default_config = "default.yml"
+    default_config = "./rss-ntfy/default.yml"
 
     defaults = load_config(default_config)
     DEFAULT_CONFIG = defaults
@@ -532,13 +532,13 @@ def main():
     cache_path = config.get('cache_location')
     cache_location = os.path.expanduser(cache_path)
 
-    Path(f"{cache_location}/rss-ntfy/").mkdir(parents=True, exist_ok=True)
+    Path(f"{cache_location}/").mkdir(parents=True, exist_ok=True)
 
     for service_name, service_config in CONFIG['services'].items():
         logger.info(f"service: {service_name}")
         logger.debug(f'"service_config": {json.dumps(service_config)}')
 
-        service_hist = f"{cache_location}/rss-ntfy/{service_name}_hist"
+        service_hist = f"{cache_location}/{service_name}_hist"
         Path(service_hist).touch(exist_ok=True)
 
         for feed_config in CONFIG['feeds'][service_name]:

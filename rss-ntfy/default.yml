@@ -128,7 +128,7 @@ services:
     ntfy_tags: ['notes']
 
 config:
-  cache_location: ~/.cache
+  cache_location: /data
   run_on_startup: false
   log_level: info
   schedule: '*/30 * * * *'
