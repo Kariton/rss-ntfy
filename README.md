@@ -44,7 +44,7 @@ global:                                                         # settings to us
 services: # service definition
   github_release:                                               # service name - referenced within the 'feeds' definition
     service_feed: https://github.com/{{ name }}/releases.atom   # where the rss feed is located
-    service_url: https://github.com/{{ name }}                  # used in the sub-title to link to the feed
+    service_url: https://github.com/{{ name }}                  # used in the subtitle to link to the feed
     ntfy_icon: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
     ntfy_subtitle_prefix: 🤖 GitHub Release
     ntfy_subtitle_seperator: by
@@ -65,12 +65,13 @@ feeds: # feeds to monitor from those services
   [...]
 
 config:
-  cache_location: ~/.cache
+  cache_location: /data
   run_on_startup: false
   log_level: info
   schedule: '*/30 * * * *'                                      # crontab style expression - concurrent jobs are not possible
   service_wait: 60                                              # time to wait between services
   feed_wait: 5                                                  # time to wait between posts of one feed
+  max_message_size: 4096                                        # max size of message for pagenation
   max_attempts: 3                                               # retry to send message; consider failed after
   retry_wait: 30                                                # time to wait between retrys
 ```

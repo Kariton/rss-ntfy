@@ -56,7 +56,7 @@ def custom_validation(config):
 
     for feed_name, feed_config in config["feeds"].items():
         if not "ntfy_topic" in feed_config:
-            if not "ntfy_topic" in config["services"][feed_name]:
+            if not "ntfy_topic" in config["services"][feed_name] and not "ntfy_topic" in config["global"]:
                 raise jsonschema.ValidationError("The property 'ntfy_topic' must be present in either 'global', 'feeds', or 'services'.")
 
 
@@ -88,12 +88,12 @@ def update_config(init=False):
         if custom_config is not None:
             if logger is not None:
                 logger.debug(f'custom_config": {json.dumps(custom_config)}')
-                logger.debug(f'custom_config": {json.dumps(CONFIG)}')
+                logger.debug(f'default_config": {json.dumps(CONFIG)}')
 
             merged_config = merge_configurations(copy.deepcopy(DEFAULT_CONFIG), custom_config)
 
             if logger is not None:
-                logger.debug(f'custom_config": {json.dumps(merged_config)}')
+                logger.debug(f'merged_config": {json.dumps(merged_config)}')
 
             json_schema = load_schema(schema_path)
 
