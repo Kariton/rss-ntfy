@@ -477,9 +477,13 @@ def process_feed(data_json):
 
     logger.info(f"feed_url: {feed_url}")
 
-    feed_data = feedparser.parse(data_json['feed_url'])
+    feed_data = feedparser.parse(feed_url)
     item_count = 1
     total_items = len(feed_data.entries)
+
+    if feed_data.status != 200:
+      logger.error(f"Feed unavailable: {service} - {feed} - {feed_url} - {ntfy_server}/{ntfy_topic}
+      return
 
     for item in feed_data.entries:
         feed_wait = int(config.get('feed_wait'))
