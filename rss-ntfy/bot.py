@@ -482,7 +482,7 @@ def process_feed(data_json):
     total_items = len(feed_data.entries)
 
     if feed_data.status != 200:
-      logger.error(f"Feed unavailable: {service} - {feed} - {feed_url} - {ntfy_server}/{ntfy_topic}
+      logger.error(f"Feed unavailable: {service} - {feed} - {feed_url} - {ntfy_server}/{ntfy_topici}")
       return
 
     for item in feed_data.entries:
